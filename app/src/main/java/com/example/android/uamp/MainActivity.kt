@@ -21,6 +21,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.media.AudioManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
 import com.example.android.uamp.media.MusicService
 import com.example.android.uamp.utils.Event
 import com.example.android.uamp.utils.InjectorUtils
@@ -62,6 +63,14 @@ class MainActivity : AppCompatActivity() {
                 navigateToMediaItem(mediaId)
             }
         })
+
+        findViewById<Button>(R.id.add).setOnClickListener {
+            viewModel.addRandomMedia()
+        }
+
+        findViewById<Button>(R.id.remove).setOnClickListener {
+            viewModel.removeRandomMedia()
+        }
     }
 
     private fun navigateToMediaItem(mediaId: String) {

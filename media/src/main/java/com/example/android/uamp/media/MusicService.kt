@@ -118,6 +118,9 @@ class MusicService : MediaBrowserServiceCompat() {
                 .apply {
                     setSessionActivity(sessionActivityPendingIntent)
                     isActive = true
+                    setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS
+                            or MediaSessionCompat.FLAG_HANDLES_QUEUE_COMMANDS
+                            or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
                 }
 
         /**

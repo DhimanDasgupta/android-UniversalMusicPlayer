@@ -22,7 +22,11 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaDescriptionCompat
+import android.support.v4.media.session.MediaControllerCompat
+import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import com.example.android.uamp.MainActivity
 import com.example.android.uamp.MediaItemData
@@ -105,6 +109,26 @@ class MainActivityViewModel(private val mediaSessionConnection: MediaSessionConn
             }
         } else {
             transportControls.playFromMediaId(mediaItem.mediaId, null)
+        }
+    }
+
+    fun addRandomMedia() {
+        if (mediaSessionConnection.isConnected.value == true) {
+            val mediaDescription = MediaDescriptionCompat.Builder()
+                    .setMediaId("wake_up_01")
+                    .setTitle("Intro - The Way Of Waking Up (feat. Alan Watts)")
+                    .setMediaUri(Uri.parse("https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/01_-_Intro_-_The_Way_Of_Waking_Up_feat_Alan_Watts.mp3"))
+                    .build()
+            mediaSessionConnection.mediaController.addQueueItem(mediaDescription)
+        }
+    }
+
+    fun removeRandomMedia() {
+        mediaSessionConnection.isConnected.value?.let {
+            mediaSessionConnection.mediaController.queue?.let {
+                val mediaQueueItem: MediaSessionCompat.QueueItem = mediaSessionConnection.mediaController.queue[0]
+                mediaSessionConnection.mediaController.removeQueueItem(mediaQueueItem.description)
+            }
         }
     }
 
